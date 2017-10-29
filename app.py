@@ -4,13 +4,6 @@ from redis import Redis
 app = Flask(__name__)
 redis = Redis(host='redis.chris1.svc', port=6379)
 
-# bugfix
-try:
-    username = getpass.getuser()
-except KeyError:
-    username = str(os.getuid())
-tempdir = os.path.join(tempdir, 'matplotlib-%s' % username)
-
 @app.route('/')
 def hello():
     count = redis.incr('hits')
