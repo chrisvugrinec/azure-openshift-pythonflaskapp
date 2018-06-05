@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webcounter 
+  labels:
+    app: webcounter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webcounter
+  template:
+    metadata:
+      labels:
+        app: webcounter
+    spec:
+      containers:
+        - name: webcounter
+          image: cvugrinec/webcounter
+          ports:
+          - containerPort: 5000
+          env:
+          - name: REDIS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: biab-dev-config
+                key: biab.dev.host1
